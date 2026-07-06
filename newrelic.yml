@@ -1,0 +1,33 @@
+common: &default_settings
+  license_key: '${NEW_RELIC_LICENSE_KEY:59400ec9720dcd630590cfa313f9afa49301NRAL}'
+  app_name: fiapx-upload-service
+  log_level: info
+  log_file_name: newrelic_agent.log
+  distributed_tracing:
+    enabled: true
+  span_events:
+    enabled: true
+    max_samples_stored: 2000
+  application_logging:
+    enabled: true
+    forwarding:
+      enabled: true
+      max_samples_stored: 10000
+  transaction_tracer:
+    enabled: true
+    transaction_threshold: apdex_f
+    record_sql: obfuscated
+  error_collector:
+    enabled: true
+    ignore_status_codes: 404
+
+development:
+  <<: *default_settings
+  app_name: fiapx-upload-service (Development)
+
+test:
+  <<: *default_settings
+  app_name: fiapx-upload-service (Test)
+
+production:
+  <<: *default_settings

@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: upload-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5434/fiapx_upload}
+    username: ${DB_USERNAME:fiapx}
+    password: ${DB_PASSWORD:fiapx123}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: upload-pool
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:fiapx}
+    password: ${RABBITMQ_PASS:fiapx123}
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8082
+  forward-headers-strategy: framework
+
+jwt:
+  secret: ${JWT_SECRET:ZmlhcHhzZWNyZXRrZXlmb3Jqd3RhdXRoZW50aWNhdGlvbjIwMjU=}
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  s3:
+    bucket-name: ${S3_BUCKET_NAME:fiapx-videos}
+    endpoint: ${S3_ENDPOINT:http://localhost:4566}
+    path-style-access: ${S3_PATH_STYLE:true}
+
+upload:
+  max-file-size-bytes: ${UPLOAD_MAX_FILE_SIZE:2147483648}
+  max-chunk-size-bytes: ${UPLOAD_MAX_CHUNK_SIZE:10485760}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  metrics:
+    tags:
+      application: upload-service
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html

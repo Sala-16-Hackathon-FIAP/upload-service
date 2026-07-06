@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: fiapx-upload-postgres
+    environment:
+      POSTGRES_DB: fiapx_upload
+      POSTGRES_USER: fiapx
+      POSTGRES_PASSWORD: fiapx123
+    ports:
+      - "5434:5432"
+    volumes:
+      - upload_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fiapx -d fiapx_upload"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+#  rabbitmq:
+#    image: rabbitmq:3.13-management-alpine
+#    container_name: fiapx-rabbitmq
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
+#    environment:
+#      RABBITMQ_DEFAULT_USER: fiapx
+#      RABBITMQ_DEFAULT_PASS: fiapx123
+#    healthcheck:
+#      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+#      interval: 10s
+#      timeout: 10s
+#      retries: 10
+
+  localstack:
+    image: localstack/localstack:3
+    container_name: fiapx-localstack
+    ports:
+      - "4566:4566"
+    environment:
+      SERVICES: s3
+      DEFAULT_REGION: us-east-1
+    volumes:
+      - localstack_data:/var/lib/localstack
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+volumes:
+  upload_postgres_data:
+  localstack_data:
