@@ -4,10 +4,8 @@ metadata:
   name: upload-service
   labels:
     app: upload-service
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: upload-service
   ports:

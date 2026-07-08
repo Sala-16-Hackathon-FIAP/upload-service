@@ -65,6 +65,7 @@ spec:
                 secretKeyRef:
                   name: upload-service-secrets
                   key: new-relic-license-key
+                  optional: true
             - name: AWS_REGION
               value: "us-east-1"
           livenessProbe:
