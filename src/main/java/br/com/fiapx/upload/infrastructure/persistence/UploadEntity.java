@@ -45,6 +45,15 @@ public class UploadEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    // Reliability bookkeeping, not part of the Upload aggregate: maintained only
+    // via direct UPDATEs (UploadJpaRepository) and read by the reconciliation
+    // query. Intentionally not mapped in fromDomain/toDomain.
+    @Column(name = "processing_started_at")
+    private LocalDateTime processingStartedAt;
+
+    @Column(name = "reconciliation_attempts", nullable = false)
+    private int reconciliationAttempts;
+
     protected UploadEntity() {}
 
     public static UploadEntity fromDomain(Upload u) {
