@@ -60,6 +60,10 @@ spec:
                 secretKeyRef:
                   name: upload-service-secrets
                   key: s3-bucket
+            - name: S3_ENDPOINT
+              value: ""
+            - name: S3_PATH_STYLE
+              value: "false"
             - name: NEW_RELIC_LICENSE_KEY
               valueFrom:
                 secretKeyRef:
