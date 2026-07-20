@@ -60,6 +60,10 @@ spec:
                 secretKeyRef:
                   name: upload-service-secrets
                   key: s3-bucket
+            - name: S3_ENDPOINT
+              value: ""
+            - name: S3_PATH_STYLE
+              value: "false"
             - name: NEW_RELIC_LICENSE_KEY
               valueFrom:
                 secretKeyRef:
@@ -68,6 +72,21 @@ spec:
                   optional: true
             - name: AWS_REGION
               value: "us-east-1"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: upload-service-secrets
+                  key: aws-access-key-id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: upload-service-secrets
+                  key: aws-secret-access-key
+            - name: AWS_SESSION_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: upload-service-secrets
+                  key: aws-session-token
           livenessProbe:
             httpGet:
               path: /actuator/health
