@@ -2,6 +2,10 @@
 
 Handles chunked video uploads using S3 multipart upload. Publishes a `video.upload.completed` event to RabbitMQ when all chunks have been assembled.
 
+![FIAP-X platform architecture](docs/architecture.png)
+
+> High-level architecture of the FIAP-X platform — microservices, choreographed saga over RabbitMQ, database-per-service (RDS), object storage (S3), running on EKS and provisioned with Terraform.
+
 ## Technology Stack
 
 - **Java 21** + **Spring Boot 3.5.0**
